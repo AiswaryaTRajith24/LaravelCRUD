@@ -20,8 +20,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized User!!!'], 401);
         }
 
+        $user = JWTAuth::user();
+
         return response()->json([
             'token' => $token,
+            'role' => $user->role,
             'token_type' => 'bearer',
             'expires_in' => config('jwt.ttl')
         ]);

@@ -6,13 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
-    <!-- ✅ Bootstrap CSS CDN -->
+    <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <!-- ✅ Font Awesome (for icons) -->
+    <!-- Font Awesome (for icons) -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 
 </head>
 
@@ -26,29 +33,32 @@
                         class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form action="{{ route('login') }}" method="POST">
+                    <form action="{{ route('login') }}" method="POST" id="loginForm">
                         @csrf
 
                         <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start pb-3">
                             <p class="lead fw-normal mb-0 me-3 fs-2">Sign in</p>
                         </div>
 
+                        <!-- Error message container -->
+                        <div id="errorMessages" class="error text-danger mb-3"></div>
+                        
                         <!-- Email input -->
                         <div class="form-outline mb-4">
                             <label class="form-label">Email address</label>
                             <input type="email" name="email" class="form-control form-control-lg"
-                                placeholder="Enter a valid email address" required />
+                                placeholder="Enter a valid email address" id="email"/>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3">
                             <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control form-control-lg"
-                                placeholder="Enter password" required />
+                                placeholder="Enter password" id="password"/>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="submit" class="btn btn-primary btn-lg"
+                            <button type="submit" class="btn btn-primary btn-lg" id="loginButton" disabled
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                         </div>
 
@@ -56,10 +66,10 @@
                 </div>
             </div>
         </div>
-        </div>
     </section>
 
 
+    <!-- Custom script  -->
+    <script src="{{ asset('js/login.js') }}"></script>
 </body>
-
 </html>
