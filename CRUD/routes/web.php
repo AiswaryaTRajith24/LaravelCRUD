@@ -10,6 +10,10 @@ Route::get('/user-dashboard', function () {
     return view('product_list');
 })->name('user-dashboard');
 
+Route::get('/admin-dashboard', function () {
+    return view('users_list');
+})->name('admin-dashboard');
+
 Route::get('/checkout', function () {
     return view('checkout');
 });
@@ -22,6 +26,3 @@ Route::get('/invoice', function () {
     return view('invoice');
 });
 
-Route::get('/admin-dashboard', function () {
-    return view('admin_dashboard');
-});
