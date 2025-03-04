@@ -26,3 +26,7 @@ Route::get('/invoice', function () {
     return view('invoice');
 });
 
+Route::get('/manage-users', function () {
+    return view('manage_users');
+});
+

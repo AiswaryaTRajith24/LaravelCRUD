@@ -5,12 +5,12 @@
   </div>
   <ul class="sidebar-nav">
     <li class="nav-item">
-      <a class="nav-link active" href="#">
+      <a class="nav-link active" href="{{ url('/admin-dashboard') }}">
         <i class="nav-icon cil-speedometer"></i> Users
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{ url('/manage-users') }}">
         <i class="nav-icon cil-speedometer"></i> Manage Users
       </a>
     </li>
