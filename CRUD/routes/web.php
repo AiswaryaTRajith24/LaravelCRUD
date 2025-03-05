@@ -30,3 +30,7 @@ Route::get('/manage-users', function () {
     return view('manage_users');
 });
 
+Route::get('/add-users', function () {
+    return view('add_users');
+});
+

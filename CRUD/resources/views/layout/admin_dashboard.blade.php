@@ -29,13 +29,18 @@
 </head>
 
 <body>
-<div class="d-flex">
+<body>
+    <div class="d-flex">
         <!-- Sidebar -->
-        @include('sidebar')
+        <div class="bg-dark text-white vh-100" id="sidebar" style="width: 250px; position: fixed; left: 0; top: 0; bottom: 0;">
+            @include('sidebar')
+        </div>
 
         <!-- Main Content -->
-        <div class="container-fluid flex-grow-1 p-4">
+        <div class="container-fluid p-4" style="margin-left: 250px;">
             @yield('admincontent')
         </div>
     </div>
+</body>
+
 </body>

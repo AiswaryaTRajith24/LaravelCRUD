@@ -92,7 +92,6 @@ function fetchUsers() {
 }
 
 function deleteUser(userId) {
-    console.log("AAAAAAA",userId);
     const token = localStorage.getItem('authToken');
     if (!token) {
         console.error("No token found. User is not authenticated.");
