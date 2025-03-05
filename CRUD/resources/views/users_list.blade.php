@@ -4,6 +4,7 @@
 
 @section('admincontent')
 <div>
+    <h1>Users</h1>
     <table class="table align-middle mb-0 bg-white">
         <thead class="bg-light">
             <tr>
@@ -43,7 +44,7 @@ function fetchUsers() {
         .then(response => {
             let users = response.data;
             let tableBody = document.getElementById("usersTableBody");
-            tableBody.innerHTML = ""; // Clear existing content
+            tableBody.innerHTML = ""; 
 
             users.forEach(user => {
                 let row = `<tr>

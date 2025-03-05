@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CreateUserController;
 use App\Http\Controllers\DeleteUserController;
+use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\UpdateUserController;
 use App\Http\Controllers\UserListingController;
 
@@ -14,6 +15,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('jwt.auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/getallproducts', [ProductListingController::class, 'productsList']);
+    
 
     // User CRUD (Only accessible if the user is an admin)
     Route::middleware('admin')->group(function () {

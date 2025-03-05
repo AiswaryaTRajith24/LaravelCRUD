@@ -34,3 +34,6 @@ Route::get('/add-users', function () {
     return view('add_users');
 });
 
+Route::get('/admin-products-list', function () {
+    return view('admin_products_list');
+});

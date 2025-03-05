@@ -20,7 +20,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{ '/admin-products-list' }}">
         <i class="nav-icon cil-storage"></i> Products</a>
     </li>
     <li class="nav-item">
