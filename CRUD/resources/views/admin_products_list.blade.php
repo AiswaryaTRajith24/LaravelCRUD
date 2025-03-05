@@ -1,6 +1,6 @@
 @extends('layout.admin_dashboard')
 
-@section('title', 'Users List')
+@section('title', 'Products')
 
 @section('admincontent')
 <div>
@@ -32,42 +32,38 @@ function fetchProducts(){
         console.error("No token found. User is not authenticated.");
         return;
     }
-    axios.get('/api/getallproducts',{
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-        .then(response => {
-            let products = response.data;
-            console.log(products);
-            let tableBody = document.getElementById("productsTableBody");
-            tableBody.innerHTML = "";
+    $.ajax({
+            url: '/api/getallproducts',
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            success: function (products) {
+                console.log(products);
+                let tableBody = $("#productsTableBody");
+                tableBody.empty();
 
-            products.forEach((product, index) =>{
-                let row=`<tr>
-                <td>${index + 1}</td>
-                <td>
-                    <div class="d-flex align-items-center">
-                    <img
-                        src="${product.image}"
-                        alt=""
-                        style="width: 45px; height: 45px"
-                        class="rounded-circle"
-                        />
-                    <div class="ms-3">
-                        <p class="fw-bold mb-1">${product.name}</p>
-                    </div>
-                    </div>
-                </td>
-                <td>${product.description}</td>
-                <td>${product.price}</td>
-                <td>${product.stock}</td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
-        })
-        .catch(error => {
-            console.error("Error fetching products :", error);
+                products.forEach((product, index) => {
+                    let row = `<tr>
+                        <td>${index + 1}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="${product.image}" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">${product.name}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${product.description}</td>
+                        <td>${product.price}</td>
+                        <td>${product.stock}</td>
+                    </tr>`;
+                    tableBody.append(row);
+                });
+            },
+            error: function (error) {
+                alert("Error fetching products");
+            }
         });
 }
 </script>

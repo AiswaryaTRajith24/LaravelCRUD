@@ -1,6 +1,6 @@
 @extends('layout.admin_dashboard')
 
-@section('title', 'Add Product')
+@section('title', 'Add Products')
 
 @section('admincontent')
 
@@ -53,21 +53,20 @@
 async function submitForm() {
     let errors = [];
     let errorDiv = document.getElementById("errorMessages");
-    errorDiv.classList.add("d-none"); // Hide error div initially
+    errorDiv.classList.add("d-none");
 
-    // Check authentication token
+   
     const token = localStorage.getItem("authToken");
     if (!token) {
         errors.push("You are not authorized to perform this action. Please log in.");
     }
 
-    // Get form values
+   
     let name = document.getElementById("name").value.trim();
     let description = document.getElementById("description").value.trim();
     let price = document.getElementById("price").value.trim();
     let stock = document.getElementById("stock").value.trim();
     
-    // Get image file
     let imageInput = document.getElementById("image");
     if (!imageInput) {
         console.error("Image input field not found!");
@@ -75,14 +74,12 @@ async function submitForm() {
     }
     let image = imageInput.files.length > 0 ? imageInput.files[0] : null;
 
-    // Validation checks
     if (name === "" || name.length > 255) errors.push("Name is required.");
     if (description === "" || description.length > 255) errors.push("Description is required.");
     if (price === "" || !/^\d{1,8}(\.\d{1,2})?$/.test(price) || isNaN(price) || parseFloat(price) <= 0) 
         errors.push("Price is required, must be a valid number with up to 2 decimal places, and cannot be negative.");
     if (stock === "" || !/^\d+$/.test(stock) || parseInt(stock) < 0) errors.push("Stock is required and must be a non-negative integer.");
 
-    // Validate Image (if uploaded)
     if (image) {
         let validExtensions = ["jpeg", "png", "jpg", "gif", "svg"];
         let fileExtension = image.name.split(".").pop().toLowerCase();
@@ -91,12 +88,11 @@ async function submitForm() {
             errors.push("Invalid image format. Allowed formats: jpeg, png, jpg, gif, svg.");
         }
 
-        if (image.size > 2 * 1024 * 1024) { // 2MB limit
+        if (image.size > 2 * 1024 * 1024) { 
             errors.push("Image size must not exceed 2MB.");
         }
     }
 
-    // Display errors if any
     if (errors.length > 0) {
         errorDiv.innerHTML = errors.join("<br>");
         errorDiv.className = "alert alert-danger";
@@ -104,10 +100,8 @@ async function submitForm() {
         return;
     }
 
-    // CSRF Token
     let csrfToken = document.querySelector('input[name="_token"]').value;
 
-    // Use FormData to send file
     let formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
@@ -115,7 +109,6 @@ async function submitForm() {
     formData.append("stock", stock);
     if (image) formData.append("image", image);
 
-    // API Request
     try {
         let response = await fetch("{{ url('api/createproduct') }}", {
             method: "POST",
@@ -123,7 +116,7 @@ async function submitForm() {
                 "X-CSRF-TOKEN": csrfToken,
                 "Authorization": `Bearer ${token}`
             },
-            body: formData // Use FormData instead of JSON.stringify
+            body: formData 
         });
 
         let result = await response.json();
@@ -133,7 +126,6 @@ async function submitForm() {
             errorDiv.className = "alert alert-success";
             errorDiv.classList.remove("d-none");
 
-            // Clear form after success
             document.getElementById("addProductForm").reset();
         } else {
             errorDiv.innerHTML = result.message || "Something went wrong!";

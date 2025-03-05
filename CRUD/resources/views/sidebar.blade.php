@@ -1,11 +1,11 @@
 <div class="wrapper d-flex">
 <div class="sidebar border-end vh-100 d-flex flex-column">
   <div class="sidebar-header border-bottom">
-    <div class="sidebar-brand">Admin Dashboard</div>
+    <div>Admin Dashboard</div>
   </div>
   <ul class="sidebar-nav">
     <li class="nav-item">
-      <a class="nav-link active" href="{{ url('/admin-dashboard') }}">
+      <a class="nav-link" href="{{ url('/admin-dashboard') }}">
         <i class="nav-icon cil-user"></i> Users
       </a>
     </li>
@@ -29,7 +29,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{ '/manage-products' }}">
         <i class="nav-icon cil-list"></i> Manage products
       </a>
     </li>
@@ -53,18 +53,22 @@
    document.addEventListener("DOMContentLoaded", function () {
     let currentPath = window.location.pathname;
 
-    // Remove 'active' class from all nav links
-    document.querySelectorAll(".sidebar-nav .nav-link").forEach(link => {
-        link.classList.remove("active");
+    let navItems = document.querySelectorAll(".nav-item");
 
-        // Add click event to maintain 'active' class
-        link.addEventListener("click", function () {
-            document.querySelectorAll(".sidebar-nav .nav-link").forEach(l => l.classList.remove("active"));
-            this.classList.add("active");
-        });
+    navItems.forEach(item => {
+
+        let linkText = item.textContent.trim().toLowerCase();  
+
+        if (document.title.toLowerCase() == linkText) {  
+            item.classList.add("active");
+            console.log("document.title.toLowerCase()",document.title.toLowerCase());
+            console.log("linkText",linkText)
+        }
+        else
+        item.classList.remove("active");
     });
 
-    // Define mapping of URLs to menu item IDs
+
     let menuItems = {
         "/admin-dashboard": "/admin-dashboard",
         "/add-users": "/add-users",
@@ -73,13 +77,6 @@
         "/manage-products": "/manage-products",
         "/view-orders": "/view-orders",
     };
-
-    // Find the matching menu item and add 'active' class
-    document.querySelectorAll(".sidebar-nav .nav-link").forEach(link => {
-        if (link.getAttribute("href") === menuItems[currentPath]) {
-            link.classList.add("active");
-        }
-    });
 });
 
 
@@ -103,8 +100,8 @@
         let result = await response.json();
 
         if (response.ok) {
-            localStorage.removeItem('authToken'); // Remove token from local storage
-            window.location.href = "{{ url('/') }}"; // Redirect to login page
+            localStorage.removeItem('authToken');
+            window.location.href = "{{ url('/') }}"; 
         } else {
             alert(result.message || "Logout failed!");
         }
@@ -116,13 +113,9 @@
 
 </script>
 <style>
-    .sidebar-nav .nav-link {
-    color: #6c757d;
-}
-
-.sidebar-nav .nav-link.active {
-    color: #ffffff !important; /* Ensure active link is highlighted */
-    background-color: #007bff !important; /* Highlight background */
+.sidebar-nav .nav-item.active {
+    color: #ffffff !important;
+    background-color: 	#787878 !important;
     border-radius: 5px;
 }
 

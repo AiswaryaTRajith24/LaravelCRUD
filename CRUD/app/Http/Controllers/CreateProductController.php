@@ -16,7 +16,7 @@ class CreateProductController extends Controller
             'description' => 'required|string|max:255',
             'price' => 'required|numeric|regex:/^\d{1,8}(\.\d{1,2})?$/',
             'stock' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {

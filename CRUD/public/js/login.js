@@ -26,10 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (errors.length > 0) {
             errorMessages.innerHTML = errors.join("<br>");
-            loginButton.disabled = true;
         } else {
             errorMessages.innerHTML = "";
-            loginButton.disabled = false;
         }
     }
 
@@ -40,43 +38,38 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         validateFields();
 
-        if (loginButton.disabled) return; // Prevent API call if validation fails
-
         let formData = {
             email: emailField.value.trim(),
             password: passwordField.value.trim(),
         };
 
-        // jQuery AJAX request
-        axios.post("/api/login", formData, {
+        $.ajax({
+            url: "/api/login",
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json",
             headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-            }
-        })
-        .then(response => {        
-            if (response.data.token) {
-                localStorage.setItem("authToken", response.data.token);
-                localStorage.setItem("userRole", response.data.role); 
-        
-                // Redirect based on user role
-                if (response.data.role === "admin") {
-                    window.location.href = "/admin-dashboard";
-                } else {
-                    window.location.href = "/user-dashboard";
-                }
-            } else {
-                errorMessages.innerHTML = `<span class="text-danger">${response.data.error || "Login failed"}</span>`;
-            }
-        })
-        .catch(error => {
-            if (error.response) {
-                errorMessages.innerHTML = `<span class="text-danger">${error.response.data.error || "An error occurred. Please try again."}</span>`;
-            }else{
-                errorMessages.innerHTML = `<span class="text-danger">An error occurred. Please try again.</span>`;
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                if (response.token) {
+                    localStorage.setItem("authToken", response.token);
+                    localStorage.setItem("userRole", response.role);
 
-            }
+                    // Redirect based on user role
+                    if (response.role === "admin") {
+                        window.location.href = "/admin-dashboard";
+                    } else {
+                        window.location.href = "/user-dashboard";
+                    }
+                } else {
+                    errorMessages.innerHTML = `<span class="text-danger">${response.error || "Login failed"}</span>`;
+                }
+            },
+            error: function (xhr) {
+                let errorMsg = xhr.responseJSON?.error || "An error occurred. Please try again.";
+                errorMessages.innerHTML = `<span class="text-danger">${errorMsg}</span>`;
+            },
         });
-        
     });
 });

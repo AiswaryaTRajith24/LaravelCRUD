@@ -1,6 +1,6 @@
-<!-- @extends('layout.admin_dashboard') -->
+@extends('layout.admin_dashboard')
 
-<!-- @section('title', 'Manage users') -->
+@section('title', 'Manage users')
 
 @section('admincontent')
 <div>
@@ -34,16 +34,15 @@ function fetchUsers() {
         console.error("No token found. User is not authenticated.");
         return;
     }
-    axios.get('/api/getallusers',{
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-        .then(response => {
-            let users = response.data;
-            let tableBody = document.getElementById("usersTableBody");
-            tableBody.innerHTML = ""; // Clear existing content
-
+    
+    $.ajax({
+        url: '/api/getallusers',
+        type: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+        success: function (users) {
+            let tableBody = $("#usersTableBody");
+            tableBody.empty();
+            
             users.forEach(user => {
                 let row = `<tr data-id="${user.id}">
                     <td>${user.id}</td>
@@ -60,36 +59,29 @@ function fetchUsers() {
                         </div>
                     </td>
                 </tr>`;
-                tableBody.innerHTML += row;
+                tableBody.append(row);
             });
 
-            document.querySelectorAll(".edit-btn").forEach(button => {
-                button.addEventListener("click", function () {
-                    let row = this.closest("tr");
-                    toggleEditMode(row, true);
-                });
+            $(".edit-btn").on("click", function () {
+                let row = $(this).closest("tr");
+                toggleEditMode(row, true);
             });
 
-            document.querySelectorAll(".save-btn").forEach(button => {
-                button.addEventListener("click", function () {
-                    let row = this.closest("tr");
-                    saveUser(row);
-                });
+            $(".save-btn").on("click", function () {
+                let row = $(this).closest("tr");
+                saveUser(row);
             });
 
-            document.querySelectorAll(".delete-btn").forEach(button => {
-                button.addEventListener("click", function () {
-                    let row = this.closest("tr"); //Find the closest row
-                    let userId = row.getAttribute("data-id"); //Get user ID from row
-                    deleteUser(userId);
-                });
+            $(".delete-btn").on("click", function () {
+                let row = $(this).closest("tr"); 
+                let userId = row.data("id"); 
+                deleteUser(userId);
             });
-
-
-        })
-        .catch(error => {
-            console.error("Error fetching users:", error);
-        });
+        },
+        error: function (error) {
+            alert("Error fetching users");
+        }
+    });
 }
 
 function deleteUser(userId) {
@@ -100,28 +92,57 @@ function deleteUser(userId) {
     }
 
     if (confirm("Are you sure you want to delete this user?")) {
-        axios.post(`/api/deleteuser/${userId}`, {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
+        $.ajax({
+            url: `/api/deleteuser/${userId}`,
+            type: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            success: function () {
+                alert("User deleted successfully!");
+                fetchUsers();
+            },
+            error: function (error) {
+                alert("Error deleting user");
             }
-        })
-        .then(response => {
-            alert("User deleted successfully!");
-            fetchUsers(); // Refresh the list
-        })
-        .catch(error => {
-            console.error("Error deleting user:", error);
         });
     }
 }
 
-// Function to toggle edit mode
 function toggleEditMode(row, isEditing) {
-    row.querySelectorAll(".text").forEach(el => el.classList.toggle("d-none", isEditing));
-    row.querySelectorAll(".edit-input").forEach(el => el.classList.toggle("d-none", !isEditing));
+    row.find(".text").toggleClass("d-none", isEditing);
+    row.find(".edit-input").toggleClass("d-none", !isEditing);
+    row.find(".edit-btn").toggleClass("d-none", isEditing);
+    row.find(".save-btn").toggleClass("d-none", !isEditing);
+}
 
-    row.querySelector(".edit-btn").classList.toggle("d-none", isEditing);
-    row.querySelector(".save-btn").classList.toggle("d-none", !isEditing);
+function saveUser(row) {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        console.error("No token found. User is not authenticated.");
+        return;
+    }
+
+    let userId = row.data("id");
+    let updatedData = {
+        name: row.find("td:nth-child(2) input").val(),
+        email: row.find("td:nth-child(3) input").val(),
+        phone_number: row.find("td:nth-child(4) input").val() || null,
+        address: row.find("td:nth-child(5) input").val() || null,
+        role: row.find("td:nth-child(6) input").val()
+    };
+
+    $.ajax({
+        url: `/api/updateuser/${userId}`,
+        type: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        data: updatedData,
+        success: function () {
+            alert("User updated successfully!");
+            fetchUsers();
+        },
+        error: function (error) {
+            alert("Error updating user");
+        }
+    });
 }
 
 </script>

@@ -13,7 +13,7 @@
   </section>
 @endsection
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         fetchProducts();
@@ -26,60 +26,65 @@
             return;
         }
 
-        axios.get("{{ url('api/getallproducts') }}", {
+        $.ajax({
+            url: "{{ url('api/getallproducts') }}",
+            type: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Accept": "application/json"
-            }
-        })
-        .then(response => {
-            console.log(response.data);
-            let productList = document.getElementById("product-list");
-            productList.innerHTML = ""; // Clear existing products
-            
-            response.data.forEach(product => {
-                let productCard = `
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card">
-                            <div class="bg-image hover-zoom ripple img-container" data-mdb-ripple-color="light">
-                                <img src="${product.image}" class="w-100 img-fluid" alt="${product.name}" />
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title mb-3">${product.name}</h5>
-                                <p>${product.category || 'Uncategorized'}</p>
-                                <h6 class="mb-3"><strong>$${product.price}</strong></h6>
-                                <button class="btn btn-primary add-to-cart" onclick="addToCart(${product.id})">
-                                    Add to Cart
-                                </button>
+            },
+            success: function (products) {
+                console.log(products);
+                let productList = $("#product-list");
+                productList.empty();
+
+                products.forEach(product => {
+                    let productCard = `
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card">
+                                <div class="bg-image hover-zoom ripple img-container" data-mdb-ripple-color="light">
+                                    <img src="${product.image}" class="w-100 img-fluid" alt="${product.name}" />
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3">${product.name}</h5>
+                                    <p>${product.category || 'Uncategorized'}</p>
+                                    <h6 class="mb-3"><strong>$${product.price}</strong></h6>
+                                    <button class="btn btn-primary add-to-cart" onclick="addToCart(${product.id})">
+                                        Add to Cart
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
-                productList.innerHTML += productCard;
-            });
-        })
-        .catch(error => console.error("Error fetching products:", error));
+                    `;
+                    productList.append(productCard);
+                });
+            },
+            error: function (error) {
+                alert("Error fetching products");
+            }
+        });
     }
 
     function addToCart(productId) {
-        alert("Product " + productId + " added to cart!"); // Implement actual cart logic here
+        alert("Product " + productId + " added to cart!");
     }
 </script>
 
+
 <style>
   .img-container {
-    width: 100%;         /* Full width of the card */
-    height: 200px;       /* Fixed height */
-    display: flex;       /* Flexbox to center image */
+    width: 100%;        
+    height: 200px;      
+    display: flex;       
     justify-content: center;
     align-items: center;
-    overflow: hidden;     /* Hide overflow if image is too large */
+    overflow: hidden;     
 }
 
 .img-container img {
-    height: 100%;        /* Ensure image fills the container */
-    width: auto;         /* Maintain aspect ratio */
-    object-fit: cover;   /* Crop image while maintaining proportions */
+    height: 100%;       
+    width: auto;         
+    object-fit: cover;   
 }
 
 </style>

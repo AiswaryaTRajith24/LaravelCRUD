@@ -9,15 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next): Response
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
 
-            // Check if the authenticated user is an admin
             if (!$user || $user->role !== 'admin') {
                 return response()->json(['error' => 'Access denied. Admins only.'], 403);
             }

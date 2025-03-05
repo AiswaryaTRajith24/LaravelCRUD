@@ -41,3 +41,7 @@ Route::get('/admin-products-list', function () {
 Route::get('/add-product', function () {
     return view('add_product');
 });
+
+Route::get('/manage-products', function () {
+    return view('manage_products');
+});

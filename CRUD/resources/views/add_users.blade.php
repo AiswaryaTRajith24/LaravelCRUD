@@ -1,6 +1,6 @@
 @extends('layout.admin_dashboard')
 
-@section('title', 'Users List')
+@section('title', 'Add Users')
 
 @section('admincontent')
 
@@ -66,7 +66,6 @@
 </div>
 
 <script>
-    // Auto-generate password on page load
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("password").value = generatePassword(10);
     });
@@ -98,15 +97,13 @@
     async function submitForm() {
     let errors = [];
     let errorDiv = document.getElementById("errorMessages");
-    errorDiv.classList.add("d-none"); // Hide error div initially
+    errorDiv.classList.add("d-none");
 
-    // Check authentication token
     const token = localStorage.getItem("authToken");
     if (!token) {
         errors.push("You are not authorized to perform this action. Please log in.");
     }
 
-    // Get form values
     let name = document.getElementById("name").value.trim();
     let email = document.getElementById("email").value.trim();
     let password = document.getElementById("password").value.trim();
@@ -114,7 +111,7 @@
     let address = document.getElementById("address").value.trim();
     let role = document.getElementById("role").value;
 
-    // Validation checks
+
     if (name === "" || name.length > 255) errors.push("Name is required and should be less than 255 characters.");
     if (email === "" || !/^\S+@\S+\.\S+$/.test(email)) errors.push("Valid email is required.");
     if (password.length < 6) errors.push("Password must be at least 6 characters.");
@@ -122,7 +119,6 @@
     if (address === "" || address.length > 500) errors.push("Address is required and should be less than 500 characters.");
     if (role === "") errors.push("Role is required.");
 
-    // Display errors if any
     if (errors.length > 0) {
         errorDiv.innerHTML = errors.join("<br>");
         errorDiv.className = "alert alert-danger";
@@ -130,17 +126,16 @@
         return;
     }
 
-    // CSRF Token
+
     let csrfToken = document.querySelector('input[name="_token"]').value;
 
-    // API Request
     try {
         let response = await fetch("{{ url('api/createuser') }}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken,
-                "Authorization": `Bearer ${token}` // Include auth token
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({ name, email, password, phone_number: phoneNumber, address, role })
         });
@@ -152,7 +147,6 @@
             errorDiv.className = "alert alert-success";
             errorDiv.classList.remove("d-none");
 
-            // Clear form after success
             document.getElementById("addUserForm").reset();
             document.getElementById("password").value = generatePassword(10);
         } else {

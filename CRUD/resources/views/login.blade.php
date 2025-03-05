@@ -16,9 +16,10 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
 </head>
@@ -51,14 +52,14 @@
                         </div>
 
                         <!-- Password input -->
-                        <div class="form-outline mb-3">
+                        <div class="form-outline mb-3 position-relative">
                             <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control form-control-lg"
                                 placeholder="Enter password" id="password"/>
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="submit" class="btn btn-primary btn-lg" id="loginButton" disabled
+                            <button type="submit" class="btn btn-primary btn-lg" id="loginButton"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                         </div>
 
