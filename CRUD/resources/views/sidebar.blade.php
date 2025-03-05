@@ -24,7 +24,7 @@
         <i class="nav-icon cil-storage"></i> Products</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{ url('/add-products') }}">
+      <a class="nav-link" href="{{ url('/add-product') }}">
         <i class="nav-icon cil-plus"></i> Add Products
       </a>
     </li>

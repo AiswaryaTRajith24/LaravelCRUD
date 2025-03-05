@@ -7,6 +7,7 @@ use App\Http\Controllers\DeleteUserController;
 use App\Http\Controllers\ProductListingController;
 use App\Http\Controllers\UpdateUserController;
 use App\Http\Controllers\UserListingController;
+use App\Http\Controllers\CreateProductController;
 
 // Public Routes (No Authentication Required)
 Route::post('/login', [AuthController::class, 'login']);
@@ -24,5 +25,6 @@ Route::middleware('jwt.auth')->group(function () {
         Route::post('/createuser',[CreateUserController::class,'createUser']);
         Route::post('/deleteuser/{id}',[DeleteUserController::class,'deleteUser']);
         Route::post('/updateuser/{id}',[UpdateUserController::class,'updateUser']);
+        Route::post('/createproduct',[CreateProductController::class,'createProduct']);
     });
 });
