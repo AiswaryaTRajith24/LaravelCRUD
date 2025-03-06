@@ -8,22 +8,67 @@
         <!-- Icons -->
         <ul class="navbar-nav d-flex flex-row me-1">
             <li class="nav-item me-3 me-lg-0">
-                <a class="nav-link text-white" href="#"><i class="fas fa-shopping-cart"></i></a>
+                <a class="nav-link text-white" href="#" >
+                    <i class="fas fa-shopping-cart" onclick="redirectToCheckout()"></i>
+                    <span id="cart-count" class="badge bg-danger">0</span>
+                </a>
             </li>
-            <li class="nav-item dropdown">
-                <a data-bs-dropdown-init class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"> <i class="fas fa-user mx-1"></i> Profile </a>
-                <!-- Dropdown menu -->
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li>
-                        <a class="dropdown-item" href="#">My account</a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="#">Log out</a>
-                    </li>
-                </ul>
+            <li class="nav-item me-3 me-lg-0 text-white">
+                <a class="nav-link text-danger" href="javascript:void(0);" onclick="logoutUser()">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </a>
             </li>
         </ul>
     </div>
 </nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    updateCartCount();
+});
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cart-count").innerText = cart.length;
+}
+
+    async function logoutUser() {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            alert("You are already logged out.");
+            return;
+        }
+
+        try {
+            let response = await fetch("{{ url('/api/logout') }}", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            let result = await response.json();
+
+            if (response.ok) {
+                localStorage.removeItem('authToken');
+                window.location.href = "{{ url('/') }}";
+            } else {
+                alert(result.message || "Logout failed!");
+            }
+        } catch (error) {
+            console.error("Logout error:", error);
+            alert("Failed to connect to the server!");
+        }
+    }
+
+    function redirectToCheckout() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+    } else {
+        window.location.href = "{{ url('/checkout') }}";
+    }
+}
+</script>

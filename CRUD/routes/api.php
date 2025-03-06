@@ -10,6 +10,7 @@ use App\Http\Controllers\UserListingController;
 use App\Http\Controllers\CreateProductController;
 use App\Http\Controllers\DeleteProductController;
 use App\Http\Controllers\UpdateProductController;
+use App\Http\Controllers\OrderController;
 
 // Public Routes (No Authentication Required)
 Route::post('/login', [AuthController::class, 'login']);
@@ -19,6 +20,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/getallproducts', [ProductListingController::class, 'productsList']);
+    Route::post('/place-order', [OrderController::class, 'store']);
     
 
     // User CRUD (Only accessible if the user is an admin)

@@ -1,277 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.user_dashboard')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+@section('title', 'checkout')
 
-    <!-- ✅ Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <!-- ✅ Font Awesome (for icons) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-</head>
-
-<body>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+@section('content')
     <div class="container">
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-md-9">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <span class="pull-right">(<strong>5</strong>) items</span>
                             <h5>Items in your cart</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table shoping-cart-table">
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        Desktop publishing software
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    It is a long established fact that a reader will be distracted by the readable
-                                                    content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                                    |
-                                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                $180,00
-                                                <s class="small text-muted">$230,00</s>
-                                            </td>
-                                            <td width="65">
-                                                <input type="text" class="form-control" placeholder="1">
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $180,00
-                                                </h4>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        Text editor
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    There are many variations of passages of Lorem Ipsum available
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>List is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                                    |
-                                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                $50,00
-                                                <s class="small text-muted">$63,00</s>
-                                            </td>
-                                            <td width="65">
-                                                <input type="text" class="form-control" placeholder="2">
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $100,00
-                                                </h4>
-                                            </td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        CRM software
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    Distracted by the readable
-                                                    content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                                    |
-                                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                $110,00
-                                            </td>
-                                            <td width="65">
-                                                <input type="text" class="form-control" placeholder="1">
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $110,00
-                                                </h4>
-                                            </td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        PM software
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    Readable content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                                    |
-                                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                $130,00
-                                            </td>
-                                            <td width="65">
-                                                <input type="text" class="form-control" placeholder="1">
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $130,00
-                                                </h4>
-                                            </td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        Photo editor
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    Page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-                                                <div class="m-t-sm">
-                                                    <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
-                                                    |
-                                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                $700,00
-                                            </td>
-                                            <td width="65">
-                                                <input type="text" class="form-control" placeholder="1">
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $70,00
-                                                </h4>
-                                            </td>
-                                        </tr>
+                                    <tbody id="cart-items">
+                                        <!-- Cart items here -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
                             <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
 
                         </div>
@@ -315,42 +64,120 @@
                             </span>
                         </div>
                     </div>
-
-                    <div class="ibox">
-                        <div class="ibox-content">
-
-                            <p class="font-bold">
-                                Other products you may be interested
-                            </p>
-                            <hr>
-                            <div>
-                                <a href="#" class="product-name"> Product 1</a>
-                                <div class="small m-t-xs">
-                                    Many desktop publishing packages and web page editors now.
-                                </div>
-                                <div class="m-t text-righ">
-
-                                    <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                </div>
-                            </div>
-                            <hr>
-                            <div>
-                                <a href="#" class="product-name"> Product 2</a>
-                                <div class="small m-t-xs">
-                                    Many desktop publishing packages and web page editors now.
-                                </div>
-                                <div class="m-t text-righ">
-
-                                    <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cartItemsContainer = document.getElementById("cart-items");
+    let totalAmount = 0;
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `<tr><td colspan="5" class="text-center">Your cart is empty</td></tr>`;
+        return;
+    }
+
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+        console.error("No token found. User is not authenticated.");
+        return;
+    }
+
+    // Extract product IDs from the cart
+    let productIds = cart.map(item => item.id);
+
+    // Fetch product details from the API
+    $.ajax({
+        url: "{{ url('api/getallproducts') }}",
+        type: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+        },
+        success: function (products) {
+            let filteredProducts = products.filter(product => productIds.includes(product.id));
+
+            filteredProducts.forEach((product, index) => {
+                let cartItem = cart.find(item => item.id === product.id);
+                
+                // Ensure price is converted to a number
+                let price = parseFloat(product.price) || 0;
+                let originalPrice = product.original_price ? parseFloat(product.original_price) : null;
+                let itemTotal = price * cartItem.quantity;
+                totalAmount += itemTotal;
+
+                let cartItemHTML = `
+                    <tr data-index="${index}">
+                        <td width="90">
+                            <div class="cart-product-imitation">
+                                <img src="${product.image}" width="80" height="80" alt="${product.name}">
+                            </div>
+                        </td>
+                        <td class="desc">
+                            <h3>
+                                <a href="#" class="text-navy">${product.name}</a>
+                            </h3>
+                            <p class="small">${product.description}</p>
+                            <dl class="small m-b-none">
+                                <dt>Description</dt>
+                                <dd>${product.short_description || "No additional details available."}</dd>
+                            </dl>
+                            <div class="m-t-sm">
+                                <a href="javascript:void(0);" class="text-muted remove-item" data-index="${index}">
+                                    <i class="fa fa-trash"></i> Remove item
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            $${price.toFixed(2)}
+                            ${originalPrice ? `<s class="small text-muted">$${originalPrice.toFixed(2)}</s>` : ""}
+                        </td>
+                        <td width="65">
+                            <input type="number" class="form-control quantity" value="${cartItem.quantity}" min="1" data-index="${index}">
+                        </td>
+                        <td>
+                            <h4>$${itemTotal.toFixed(2)}</h4>
+                        </td>
+                    </tr>
+                `;
+
+                cartItemsContainer.innerHTML += cartItemHTML;
+            });
+
+            document.querySelector(".font-bold").innerText = `$${totalAmount.toFixed(2)}`;
+
+            // Remove item from cart
+            document.querySelectorAll(".remove-item").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    let index = this.getAttribute("data-index");
+                    cart.splice(index, 1);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    location.reload();
+                });
+            });
+
+            // Update quantity and total price
+            document.querySelectorAll(".quantity").forEach(input => {
+                input.addEventListener("change", function () {
+                    let index = this.getAttribute("data-index");
+                    cart[index].quantity = parseInt(this.value);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    location.reload();
+                });
+            });
+        },
+        error: function (error) {
+            console.error("Error fetching product details:", error);
+        }
+    });
+});
+
+
+
+</script>
+@endsection
 <style>
     body {
         margin-top: 20px;
