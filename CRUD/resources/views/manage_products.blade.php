@@ -25,7 +25,7 @@
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         fetchProducts();
     });
 
@@ -39,9 +39,11 @@
         $.ajax({
             url: '/api/getallproducts',
             type: 'GET',
-            headers: { 'Authorization': `Bearer ${token}` },
-            success: function (products) {
-                console.log("AAAAAAa",products);
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            success: function(products) {
+                console.log("AAAAAAa", products);
                 let tableBody = $("#productTableBody");
                 tableBody.empty();
 
@@ -79,23 +81,23 @@
                     tableBody.append(row);
                 });
 
-                $(".edit-btn").click(function () {
+                $(".edit-btn").click(function() {
                     let row = $(this).closest("tr");
                     toggleEditMode(row, true);
                 });
 
-                $(".save-btn").click(function () {
+                $(".save-btn").click(function() {
                     let row = $(this).closest("tr");
                     saveProduct(row);
                 });
 
-                $(".delete-btn").click(function () {
+                $(".delete-btn").click(function() {
                     let row = $(this).closest("tr");
                     let productId = row.attr("data-id");
                     deleteProduct(productId);
                 });
             },
-            error: function (error) {
+            error: function(error) {
                 alert("Error fetching products");
             }
         });
@@ -112,12 +114,14 @@
             $.ajax({
                 url: `/api/deleteproduct/${productId}`,
                 type: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` },
-                success: function () {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                success: function() {
                     alert("Product deleted successfully!");
                     fetchProducts();
                 },
-                error: function (error) {
+                error: function(error) {
                     alert("Error deleting product");
                 }
             });
@@ -132,8 +136,7 @@
         }
 
         let productId = row.attr("data-id");
-        let updatedData = 
-        {
+        let updatedData = {
             name: row.find("td:nth-child(2) input").val(),
             description: row.find("td:nth-child(4) input").val(),
             price: row.find("td:nth-child(5) input").val(),
@@ -145,24 +148,26 @@
         formData.append('price', updatedData.price);
         formData.append('stock', updatedData.stock);
 
-        let imageInput = row.find("td:nth-child(3) input")[0]; 
+        let imageInput = row.find("td:nth-child(3) input")[0];
         if (imageInput && imageInput.files.length > 0) {
             console.log("✅ Image selected:", imageInput.files[0]);
-            formData.append('image', imageInput.files[0]); 
+            formData.append('image', imageInput.files[0]);
         }
 
         $.ajax({
             url: `/api/updateproduct/${productId}`,
             type: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             data: formData,
             processData: false,
             contentType: false,
-            success: function () {
+            success: function() {
                 alert("Product updated successfully!");
                 fetchProducts();
             },
-            error: function (error) {
+            error: function(error) {
                 alert("Error updating product");
             }
         });

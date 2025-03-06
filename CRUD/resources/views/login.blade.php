@@ -43,19 +43,19 @@
 
                         <!-- Error message container -->
                         <div id="errorMessages" class="error text-danger mb-3"></div>
-                        
+
                         <!-- Email input -->
                         <div class="form-outline mb-4">
                             <label class="form-label">Email address</label>
                             <input type="email" name="email" class="form-control form-control-lg"
-                                placeholder="Enter a valid email address" id="email"/>
+                                placeholder="Enter a valid email address" id="email" />
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3 position-relative">
                             <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control form-control-lg"
-                                placeholder="Enter password" id="password"/>
+                                placeholder="Enter password" id="password" />
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
@@ -73,4 +73,5 @@
     <!-- Custom script  -->
     <script src="{{ asset('js/login.js') }}"></script>
 </body>
+
 </html>

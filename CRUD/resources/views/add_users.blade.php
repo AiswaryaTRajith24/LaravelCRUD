@@ -30,8 +30,8 @@
         <div class="form-outline mb-3 position-relative">
             <label class="form-label" for="password">Password</label>
             <input type="password" id="password" class="form-control" readonly />
-            <button type="button" class="btn btn-light position-absolute" 
-                style="top: 72%; right: 0px; transform: translateY(-50%);" 
+            <button type="button" class="btn btn-light position-absolute"
+                style="top: 72%; right: 0px; transform: translateY(-50%);"
                 onclick="togglePassword()">
                 <i id="togglePasswordIcon" class="fas fa-eye-slash"></i>
             </button>
@@ -40,7 +40,7 @@
         <!-- Phone Number input -->
         <div class="form-outline mb-3">
             <label class="form-label" for="phone_number">Phone Number</label>
-            <input type="text" id="phone_number" class="form-control" 
+            <input type="text" id="phone_number" class="form-control"
                 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
         </div>
 
@@ -66,7 +66,7 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("password").value = generatePassword(10);
     });
 
@@ -95,72 +95,78 @@
     }
 
     async function submitForm() {
-    let errors = [];
-    let errorDiv = document.getElementById("errorMessages");
-    errorDiv.classList.add("d-none");
+        let errors = [];
+        let errorDiv = document.getElementById("errorMessages");
+        errorDiv.classList.add("d-none");
 
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-        errors.push("You are not authorized to perform this action. Please log in.");
-    }
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            errors.push("You are not authorized to perform this action. Please log in.");
+        }
 
-    let name = document.getElementById("name").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value.trim();
-    let phoneNumber = document.getElementById("phone_number").value.trim();
-    let address = document.getElementById("address").value.trim();
-    let role = document.getElementById("role").value;
-
-
-    if (name === "" || name.length > 255) errors.push("Name is required and should be less than 255 characters.");
-    if (email === "" || !/^\S+@\S+\.\S+$/.test(email)) errors.push("Valid email is required.");
-    if (password.length < 6) errors.push("Password must be at least 6 characters.");
-    if (!/^\d{10}$/.test(phoneNumber)) errors.push("Phone number must be exactly 10 digits.");
-    if (address === "" || address.length > 500) errors.push("Address is required and should be less than 500 characters.");
-    if (role === "") errors.push("Role is required.");
-
-    if (errors.length > 0) {
-        errorDiv.innerHTML = errors.join("<br>");
-        errorDiv.className = "alert alert-danger";
-        errorDiv.classList.remove("d-none");
-        return;
-    }
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let password = document.getElementById("password").value.trim();
+        let phoneNumber = document.getElementById("phone_number").value.trim();
+        let address = document.getElementById("address").value.trim();
+        let role = document.getElementById("role").value;
 
 
-    let csrfToken = document.querySelector('input[name="_token"]').value;
+        if (name === "" || name.length > 255) errors.push("Name is required and should be less than 255 characters.");
+        if (email === "" || !/^\S+@\S+\.\S+$/.test(email)) errors.push("Valid email is required.");
+        if (password.length < 6) errors.push("Password must be at least 6 characters.");
+        if (!/^\d{10}$/.test(phoneNumber)) errors.push("Phone number must be exactly 10 digits.");
+        if (address === "" || address.length > 500) errors.push("Address is required and should be less than 500 characters.");
+        if (role === "") errors.push("Role is required.");
 
-    try {
-        let response = await fetch("{{ url('api/createuser') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrfToken,
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({ name, email, password, phone_number: phoneNumber, address, role })
-        });
-
-        let result = await response.json();
-
-        if (response.ok) {
-            errorDiv.innerHTML = "User created successfully!";
-            errorDiv.className = "alert alert-success";
+        if (errors.length > 0) {
+            errorDiv.innerHTML = errors.join("<br>");
+            errorDiv.className = "alert alert-danger";
             errorDiv.classList.remove("d-none");
+            return;
+        }
 
-            document.getElementById("addUserForm").reset();
-            document.getElementById("password").value = generatePassword(10);
-        } else {
-            errorDiv.innerHTML = result.message || "Something went wrong!";
+
+        let csrfToken = document.querySelector('input[name="_token"]').value;
+
+        try {
+            let response = await fetch("{{ url('api/createuser') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password,
+                    phone_number: phoneNumber,
+                    address,
+                    role
+                })
+            });
+
+            let result = await response.json();
+
+            if (response.ok) {
+                errorDiv.innerHTML = "User created successfully!";
+                errorDiv.className = "alert alert-success";
+                errorDiv.classList.remove("d-none");
+
+                document.getElementById("addUserForm").reset();
+                document.getElementById("password").value = generatePassword(10);
+            } else {
+                errorDiv.innerHTML = result.message || "Something went wrong!";
+                errorDiv.className = "alert alert-danger";
+                errorDiv.classList.remove("d-none");
+            }
+        } catch (error) {
+            errorDiv.innerHTML = "Failed to connect to the server!";
             errorDiv.className = "alert alert-danger";
             errorDiv.classList.remove("d-none");
         }
-    } catch (error) {
-        errorDiv.innerHTML = "Failed to connect to the server!";
-        errorDiv.className = "alert alert-danger";
-        errorDiv.classList.remove("d-none");
     }
-}
-
 </script>
 
 @endsection

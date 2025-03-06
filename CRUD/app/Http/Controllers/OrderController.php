@@ -45,7 +45,6 @@ class OrderController extends Controller
             ]);
         }
 
-        // Create invoice
         Invoice::create([
             'order_id' => $order->id,
             'grand_total' => $grandTotal,

@@ -3,112 +3,111 @@
 @section('title', 'checkout')
 
 @section('content')
-    <div class="container">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>Items in your cart</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-                                    <tbody id="cart-items">
-                                        <!-- Cart items here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
-
+<div class="container">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Items in your cart</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table shoping-cart-table">
+                                <tbody id="cart-items">
+                                    <!-- Cart items here -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
+                    <div class="ibox-content">
+                        <a href="{{ url('/user-dashboard') }}" class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</a>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>Cart Summary</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <span>
-                                Total
-                            </span>
-                            <h2 class="font-bold">
-                                $390,00
-                            </h2>
 
-                            <hr>
-                            <span class="text-muted small">
-                                *For United States, France and Germany applicable sales tax will be applied
-                            </span>
-                            <div class="m-t-sm">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Checkout</a>
-                                    <a href="#" class="btn btn-white btn-sm"> Cancel</a>
-                                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Cart Summary</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            Total
+                        </span>
+                        <h2 class="font-bold">
+                            $390,00
+                        </h2>
+
+                        <hr>
+                        <span class="text-muted small">
+                            *For United States, France and Germany applicable sales tax will be applied
+                        </span>
+                        <div class="m-t-sm">
+                            <div class="btn-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm" id="checkout-btn"><i class="fa fa-shopping-cart"></i> Checkout</a>
+                                <a href="{{ url('/user-dashboard') }}" class="btn btn-white btn-sm"> Cancel</a>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>Support</h5>
-                        </div>
-                        <div class="ibox-content text-center">
-                            <h3><i class="fa fa-phone"></i> +43 100 783 001</h3>
-                            <span class="small">
-                                Please contact with us if you have any questions. We are avalible 24h.
-                            </span>
-                        </div>
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Support</h5>
+                    </div>
+                    <div class="ibox-content text-center">
+                        <h3><i class="fa fa-phone"></i> +43 100 783 001</h3>
+                        <span class="small">
+                            Please contact with us if you have any questions. We are avalible 24h.
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let cartItemsContainer = document.getElementById("cart-items");
-    let totalAmount = 0;
+    document.addEventListener("DOMContentLoaded", function() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cartItemsContainer = document.getElementById("cart-items");
+        let totalAmount = 0;
 
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = `<tr><td colspan="5" class="text-center">Your cart is empty</td></tr>`;
-        return;
-    }
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `<tr><td colspan="5" class="text-center">Your cart is empty</td></tr>`;
+            return;
+        }
 
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-        console.error("No token found. User is not authenticated.");
-        return;
-    }
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            console.error("No token found. User is not authenticated.");
+            return;
+        }
 
-    // Extract product IDs from the cart
-    let productIds = cart.map(item => item.id);
+        let productIds = cart.map(item => item.id);
 
-    // Fetch product details from the API
-    $.ajax({
-        url: "{{ url('api/getallproducts') }}",
-        type: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-        },
-        success: function (products) {
-            let filteredProducts = products.filter(product => productIds.includes(product.id));
+        $.ajax({
+            url: "{{ url('api/getallproducts') }}",
+            type: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/json",
+            },
+            success: function(products) {
+                let filteredProducts = products.filter(product => productIds.includes(product.id));
 
-            filteredProducts.forEach((product, index) => {
-                let cartItem = cart.find(item => item.id === product.id);
-                
-                // Ensure price is converted to a number
-                let price = parseFloat(product.price) || 0;
-                let originalPrice = product.original_price ? parseFloat(product.original_price) : null;
-                let itemTotal = price * cartItem.quantity;
-                totalAmount += itemTotal;
+                filteredProducts.forEach((product, index) => {
+                    let cartItem = cart.find(item => item.id === product.id);
 
-                let cartItemHTML = `
+                    let price = parseFloat(product.price) || 0;
+                    let originalPrice = product.original_price ? parseFloat(product.original_price) : null;
+                    let itemTotal = price * cartItem.quantity;
+                    totalAmount += itemTotal;
+
+                    cartItem.total = itemTotal.toFixed(2);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    let cartItemHTML = `
                     <tr data-index="${index}">
                         <td width="90">
                             <div class="cart-product-imitation">
@@ -143,39 +142,91 @@
                     </tr>
                 `;
 
-                cartItemsContainer.innerHTML += cartItemHTML;
-            });
-
-            document.querySelector(".font-bold").innerText = `$${totalAmount.toFixed(2)}`;
-
-            // Remove item from cart
-            document.querySelectorAll(".remove-item").forEach(btn => {
-                btn.addEventListener("click", function () {
-                    let index = this.getAttribute("data-index");
-                    cart.splice(index, 1);
-                    localStorage.setItem("cart", JSON.stringify(cart));
-                    location.reload();
+                    cartItemsContainer.innerHTML += cartItemHTML;
                 });
-            });
 
-            // Update quantity and total price
-            document.querySelectorAll(".quantity").forEach(input => {
-                input.addEventListener("change", function () {
-                    let index = this.getAttribute("data-index");
-                    cart[index].quantity = parseInt(this.value);
-                    localStorage.setItem("cart", JSON.stringify(cart));
-                    location.reload();
+                document.querySelector(".font-bold").innerText = `$${totalAmount.toFixed(2)}`;
+
+                document.querySelectorAll(".quantity").forEach(input => {
+                    input.addEventListener("change", function() {
+                        let index = this.getAttribute("data-index");
+                        cart[index].quantity = parseInt(this.value);
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        location.reload();
+                    });
                 });
+            },
+            error: function(error) {
+                console.error("Error fetching product details:", error);
+            }
+        });
+
+        document.getElementById("checkout-btn").addEventListener("click", function() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            cart.forEach(item => {
+                console.log("Cart Item:", item);
             });
-        },
-        error: function (error) {
-            console.error("Error fetching product details:", error);
-        }
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("You must be logged in to checkout.");
+                return;
+            }
+
+            const userId = JSON.parse(localStorage.getItem('userId'));
+            console.log(userId);
+            if (!userId) {
+                alert("User ID not found. Please log in again.");
+                return;
+            }
+
+            let orderData = {
+                user_id: userId,
+                products: cart.map(item => {
+                    let cartItem = cart.find(cartItem => cartItem.id === item.id);
+                    let total = cartItem && cartItem.total ? parseFloat(cartItem.total) : 0;
+
+                    return {
+                        product_id: item.id,
+                        count: item.quantity,
+                        total: total.toFixed(2)
+                    };
+                }),
+            };
+
+
+            console.log("Order Data:", orderData);
+            $.ajax({
+                url: "{{ url('api/placeorder') }}",
+                type: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                data: JSON.stringify(orderData),
+                success: function(response) {
+                    alert("Order placed successfully!");
+                    localStorage.removeItem("cart");
+                    if (response.order && response.order.id) {
+                        localStorage.setItem('orderIdForInvoice', response.order.id);
+                        window.location.href = "{{ url('invoice') }}";
+                    } else {
+                        alert("Something went wrong");
+                    }
+                },
+                error: function(error) {
+                    console.error("Error placing order:", error);
+                    alert("Failed to place order. Please try again.");
+                }
+            });
+        });
+
     });
-});
-
-
-
 </script>
 @endsection
 <style>

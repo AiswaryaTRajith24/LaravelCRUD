@@ -72,8 +72,6 @@
 
     function addToCart(productId) {
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        // Check if product is already in cart
         let existingProduct = cart.find(item => item.id === productId);
 
         if (existingProduct) {
@@ -85,17 +83,14 @@
             });
         }
 
-        // Save updated cart to localStorage
         localStorage.setItem("cart", JSON.stringify(cart));
 
-        // Update cart count in navbar
         updateCartCount();
 
-        // Change button text
         let button = document.querySelector(`button[data-product-id="${productId}"]`);
         if (button) {
             button.innerText = "Added to Cart";
-            button.disabled = true; // Optional: Disable button after adding
+            button.disabled = true;
         }
     }
 
@@ -107,7 +102,6 @@
         document.getElementById("cart-count").innerText = totalItems;
     }
 
-    // Ensure cart count updates on page load
     document.addEventListener("DOMContentLoaded", function() {
         updateCartCount();
     });

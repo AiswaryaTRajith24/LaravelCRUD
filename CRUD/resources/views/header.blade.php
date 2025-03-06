@@ -3,12 +3,16 @@
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" href="{{ "/user-dashboard" }}">User Dashboard</a>
 
         <!-- Icons -->
         <ul class="navbar-nav d-flex flex-row me-1">
+            <li class="nav-item me-3 me-lg-0 text-white">
+                <a class="nav-link text-danger" href="{{ "/order-history" }}">Order History
+                </a>
+            </li>
             <li class="nav-item me-3 me-lg-0">
-                <a class="nav-link text-white" href="#" >
+                <a class="nav-link text-white" href="#">
                     <i class="fas fa-shopping-cart" onclick="redirectToCheckout()"></i>
                     <span id="cart-count" class="badge bg-danger">0</span>
                 </a>
@@ -23,14 +27,14 @@
 </nav>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    updateCartCount();
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        updateCartCount();
+    });
 
-function updateCartCount() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    document.getElementById("cart-count").innerText = cart.length;
-}
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.getElementById("cart-count").innerText = cart.length;
+    }
 
     async function logoutUser() {
         const token = localStorage.getItem('authToken');
@@ -63,12 +67,12 @@ function updateCartCount() {
     }
 
     function redirectToCheckout() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    if (cart.length === 0) {
-        alert("Your cart is empty!");
-    } else {
-        window.location.href = "{{ url('/checkout') }}";
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+        } else {
+            window.location.href = "{{ url('/checkout') }}";
+        }
     }
-}
 </script>

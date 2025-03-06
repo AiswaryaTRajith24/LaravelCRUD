@@ -25,6 +25,7 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'role' => $user->role,
+            'user_id' => $user->id,
             'token_type' => 'bearer',
             'expires_in' => config('jwt.ttl')
         ]);

@@ -24,27 +24,29 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    fetchUsers();
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchUsers();
+    });
 
-function fetchUsers() {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        console.error("No token found. User is not authenticated.");
-        return;
-    }
-    
-    $.ajax({
-        url: '/api/getallusers',
-        type: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` },
-        success: function (users) {
-            let tableBody = $("#usersTableBody");
-            tableBody.empty();
-            
-            users.forEach(user => {
-                let row = `<tr data-id="${user.id}">
+    function fetchUsers() {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error("No token found. User is not authenticated.");
+            return;
+        }
+
+        $.ajax({
+            url: '/api/getallusers',
+            type: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            success: function(users) {
+                let tableBody = $("#usersTableBody");
+                tableBody.empty();
+
+                users.forEach(user => {
+                    let row = `<tr data-id="${user.id}">
                     <td>${user.id}</td>
                     <td><span class="text">${user.name}</span><input type="text" class="form-control d-none edit-input" value="${user.name}"></td>
                     <td><span class="text">${user.email}</span><input type="email" class="form-control d-none edit-input" value="${user.email}"></td>
@@ -59,91 +61,94 @@ function fetchUsers() {
                         </div>
                     </td>
                 </tr>`;
-                tableBody.append(row);
-            });
+                    tableBody.append(row);
+                });
 
-            $(".edit-btn").on("click", function () {
-                let row = $(this).closest("tr");
-                toggleEditMode(row, true);
-            });
+                $(".edit-btn").on("click", function() {
+                    let row = $(this).closest("tr");
+                    toggleEditMode(row, true);
+                });
 
-            $(".save-btn").on("click", function () {
-                let row = $(this).closest("tr");
-                saveUser(row);
-            });
+                $(".save-btn").on("click", function() {
+                    let row = $(this).closest("tr");
+                    saveUser(row);
+                });
 
-            $(".delete-btn").on("click", function () {
-                let row = $(this).closest("tr"); 
-                let userId = row.data("id"); 
-                deleteUser(userId);
-            });
-        },
-        error: function (error) {
-            alert("Error fetching users");
-        }
-    });
-}
-
-function deleteUser(userId) {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        console.error("No token found. User is not authenticated.");
-        return;
-    }
-
-    if (confirm("Are you sure you want to delete this user?")) {
-        $.ajax({
-            url: `/api/deleteuser/${userId}`,
-            type: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
-            success: function () {
-                alert("User deleted successfully!");
-                fetchUsers();
+                $(".delete-btn").on("click", function() {
+                    let row = $(this).closest("tr");
+                    let userId = row.data("id");
+                    deleteUser(userId);
+                });
             },
-            error: function (error) {
-                alert("Error deleting user");
+            error: function(error) {
+                alert("Error fetching users");
             }
         });
     }
-}
 
-function toggleEditMode(row, isEditing) {
-    row.find(".text").toggleClass("d-none", isEditing);
-    row.find(".edit-input").toggleClass("d-none", !isEditing);
-    row.find(".edit-btn").toggleClass("d-none", isEditing);
-    row.find(".save-btn").toggleClass("d-none", !isEditing);
-}
+    function deleteUser(userId) {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error("No token found. User is not authenticated.");
+            return;
+        }
 
-function saveUser(row) {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        console.error("No token found. User is not authenticated.");
-        return;
+        if (confirm("Are you sure you want to delete this user?")) {
+            $.ajax({
+                url: `/api/deleteuser/${userId}`,
+                type: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                success: function() {
+                    alert("User deleted successfully!");
+                    fetchUsers();
+                },
+                error: function(error) {
+                    alert("Error deleting user");
+                }
+            });
+        }
     }
 
-    let userId = row.data("id");
-    let updatedData = {
-        name: row.find("td:nth-child(2) input").val(),
-        email: row.find("td:nth-child(3) input").val(),
-        phone_number: row.find("td:nth-child(4) input").val() || null,
-        address: row.find("td:nth-child(5) input").val() || null,
-        role: row.find("td:nth-child(6) input").val()
-    };
+    function toggleEditMode(row, isEditing) {
+        row.find(".text").toggleClass("d-none", isEditing);
+        row.find(".edit-input").toggleClass("d-none", !isEditing);
+        row.find(".edit-btn").toggleClass("d-none", isEditing);
+        row.find(".save-btn").toggleClass("d-none", !isEditing);
+    }
 
-    $.ajax({
-        url: `/api/updateuser/${userId}`,
-        type: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-        data: updatedData,
-        success: function () {
-            alert("User updated successfully!");
-            fetchUsers();
-        },
-        error: function (error) {
-            alert("Error updating user");
+    function saveUser(row) {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error("No token found. User is not authenticated.");
+            return;
         }
-    });
-}
 
+        let userId = row.data("id");
+        let updatedData = {
+            name: row.find("td:nth-child(2) input").val(),
+            email: row.find("td:nth-child(3) input").val(),
+            phone_number: row.find("td:nth-child(4) input").val() || null,
+            address: row.find("td:nth-child(5) input").val() || null,
+            role: row.find("td:nth-child(6) input").val()
+        };
+
+        $.ajax({
+            url: `/api/updateuser/${userId}`,
+            type: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            data: updatedData,
+            success: function() {
+                alert("User updated successfully!");
+                fetchUsers();
+            },
+            error: function(error) {
+                alert("Error updating user");
+            }
+        });
+    }
 </script>
 @endsection

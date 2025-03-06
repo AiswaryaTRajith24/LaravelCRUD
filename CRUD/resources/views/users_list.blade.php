@@ -26,7 +26,7 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         fetchUsers();
     });
 
@@ -44,9 +44,9 @@
                 "Authorization": `Bearer ${token}`,
                 "Accept": "application/json"
             },
-            success: function (users) {
+            success: function(users) {
                 let tableBody = $("#usersTableBody");
-                tableBody.empty(); 
+                tableBody.empty();
 
                 users.forEach(user => {
                     let row = `<tr>
@@ -60,7 +60,7 @@
                     tableBody.append(row);
                 });
             },
-            error: function (error) {
+            error: function(error) {
                 alert("Error fetching users");
             }
         });
@@ -68,7 +68,9 @@
 
     function exportToExcel() {
         let table = document.querySelector("table");
-        let wb = XLSX.utils.table_to_book(table, {sheet: "Users Data"});
+        let wb = XLSX.utils.table_to_book(table, {
+            sheet: "Users Data"
+        });
         XLSX.writeFile(wb, "Users_List.xlsx");
     }
 </script>

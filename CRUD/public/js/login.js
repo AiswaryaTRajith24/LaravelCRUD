@@ -52,9 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
+                console.log(response);
                 if (response.token) {
                     localStorage.setItem("authToken", response.token);
                     localStorage.setItem("userRole", response.role);
+                    localStorage.setItem("userId",response.user_id);
 
                     // Redirect based on user role
                     if (response.role === "admin") {

@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
 
-    <!-- ✅ Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
-    <!-- ✅ Font Awesome (for icons) -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 </head>
@@ -22,46 +23,20 @@
             <div class="container mb-5 mt-3">
                 <div class="row d-flex align-items-baseline">
                     <div class="col-xl-9">
-                        <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>ID: #123-123</strong></p>
-                    </div>
-                    <div class="col-xl-3 float-end">
-                        <a data-mdb-ripple-init class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
-                                class="fas fa-print text-primary"></i> Print</a>
-                        <a data-mdb-ripple-init class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
-                                class="far fa-file-pdf text-danger"></i> Export</a>
+                        <p style="color: #7e8d9f;font-size: 20px;">Invoice</p>
                     </div>
                     <hr>
                 </div>
 
                 <div class="container">
-                    <div class="col-md-12">
-                        <div class="text-center">
-                            <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
-                            <p class="pt-0">MDBootstrap.com</p>
-                        </div>
-
-                    </div>
-
-
                     <div class="row">
                         <div class="col-xl-8">
-                            <ul class="list-unstyled">
-                                <li class="text-muted">To: <span style="color:#5d9fc5 ;">John Lorem</span></li>
-                                <li class="text-muted">Street, City</li>
-                                <li class="text-muted">State, Country</li>
-                                <li class="text-muted"><i class="fas fa-phone"></i> 123-456-789</li>
+                            <ul class="list-unstyled" id="customer-details">
                             </ul>
                         </div>
                         <div class="col-xl-4">
                             <p class="text-muted">Invoice</p>
-                            <ul class="list-unstyled">
-                                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                                        class="fw-bold">ID:</span>#123-456</li>
-                                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                                        class="fw-bold">Creation Date: </span>Jun 23,2021</li>
-                                <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
-                                        class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
-                                        Unpaid</span></li>
+                            <ul class="list-unstyled" id="invoice-details">
                             </ul>
                         </div>
                     </div>
@@ -77,44 +52,14 @@
                                     <th scope="col">Amount</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Pro Package</td>
-                                    <td>4</td>
-                                    <td>$200</td>
-                                    <td>$800</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Web hosting</td>
-                                    <td>1</td>
-                                    <td>$10</td>
-                                    <td>$10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Consulting</td>
-                                    <td>1 year</td>
-                                    <td>$300</td>
-                                    <td>$300</td>
-                                </tr>
+                            <tbody id="order-items">
                             </tbody>
-
                         </table>
                     </div>
                     <div class="row">
-                        <div class="col-xl-8">
-                            <p class="ms-3">Add additional notes and payment information</p>
-
-                        </div>
-                        <div class="col-xl-3">
-                            <ul class="list-unstyled">
-                                <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>$1110</li>
-                                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
-                            </ul>
-                            <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
-                                    style="font-size: 25px;">$1221</span></p>
+                        <div>
+                            <p class="text-black float-end"><span class="text-black me-3"> Total Amount</span><span
+                                    style="font-size: 25px;" id="total-amount">$0.00</span></p>
                         </div>
                     </div>
                     <hr>
@@ -123,13 +68,122 @@
                             <p>Thank you for your purchase</p>
                         </div>
                         <div class="col-xl-2">
-                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary text-capitalize"
-                                style="background-color:#60bdf3 ;">Pay Now</button>
+                            <button type="button" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-primary text-capitalize" style="background-color:#60bdf3 ;" id="downloadButton">Download</button>
                         </div>
                     </div>
+
+                    <a href="{{ "/user-dashboard" }}">Back to products</a>
 
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchOrders();
+    });
+
+    function fetchOrders() {
+        const token = localStorage.getItem('authToken');
+        const orderIdForInvoice = localStorage.getItem('orderIdForInvoice');
+
+        if (!token) {
+            console.error("No token found. User is not authenticated.");
+            return;
+        }
+
+        if (!orderIdForInvoice) {
+            console.error("No orderId found in localStorage.");
+            return;
+        }
+
+        $.ajax({
+            url: `/api/orders/${orderIdForInvoice}`,
+            type: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json"
+            },
+            success: function(response) {
+                if (response && response.success && response.data) {
+                    console.log("Order details:", response.data);
+                    populateInvoice(response.data); // Populate the UI
+                } else {
+                    console.error("Error fetching order details:", response);
+                    alert("Error fetching order details.");
+                }
+            },
+            error: function(error) {
+                console.error("Error fetching order details:", error);
+                alert("Error fetching order details.");
+            }
+        });
+    }
+
+    function populateInvoice(order) {
+        // Customer Details
+        $('#customer-details').html(`
+            <li class="text-muted">To: <span style="color:#5d9fc5 ;">${order.user.name}</span></li>
+            <li class="text-muted">${order.user.address}</li>
+            <li class="text-muted">${order.user.email}</li>
+            <li class="text-muted"><i class="fas fa-phone"></i> ${order.user.phone_number}</li>
+        `);
+
+        // Invoice Details
+        $('#invoice-details').html(`
+            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Creation Date: </span>${new Date(order.invoice.created_at).toLocaleDateString()}</li>
+            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="me-1 fw-bold">Status:</span><span class="badge bg-success text-white fw-bold">Paid</span></li>
+        `);
+
+        // Order Items
+        let orderItemsHtml = '';
+        order.order_items.forEach((item, index) => {
+            orderItemsHtml += `
+                <tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${item.product.name}</td>
+                    <td>${item.count}</td>
+                    <td>$${item.product.price}</td>
+                    <td>$${item.total}</td>
+                </tr>
+            `;
+        });
+        $('#order-items').html(orderItemsHtml);
+
+        // Total Amount
+        $('#total-amount').text(`$${order.grand_total}`);
+    }
+
+    document.getElementById('downloadButton').addEventListener('click', downloadPDF);
+
+    function downloadPDF() {
+        const element = document.querySelector('.card');
+
+        const opt = {
+            margin: 10,
+            filename: 'invoice.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                scale: 2
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a5',
+                orientation: 'portrait'
+            }
+        };
+
+        html2pdf().from(element).set(opt).save();
+    }
+</script>
+
+</html>

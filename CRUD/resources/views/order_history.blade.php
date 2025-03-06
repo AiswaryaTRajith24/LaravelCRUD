@@ -1,350 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.user_dashboard')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order History</title>
+@section('title', 'order history')
 
-    <!-- ✅ Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+@section('content')
+<div class="container mt-5">
+    <h2>Order History</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Invoice ID</th>
+                <th>Products</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Grand Total</th>
+                <th>Invoice Date</th>
+            </tr>
+        </thead>
+        <tbody id="orderTableBody">
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const userId = localStorage.getItem("userId");
+        fetchOrders(userId);
+    });
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    function fetchOrders(userId) {
 
-    <!-- ✅ Font Awesome (for icons) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-</head>
-
-<body>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <div class="container">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col">
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <span class="pull-right">(<strong>5</strong>) items</span>
-                            <h5>Order History</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        Desktop publishing software
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    It is a long established fact that a reader will be distracted by the readable
-                                                    content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <button class="btn btn-primary">View Invoice</button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $180,00
-                                                </h4>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        Text editor
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    There are many variations of passages of Lorem Ipsum available
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>List is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <button class="btn btn-primary">Download Invoice</button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $100,00
-                                                </h4>
-                                            </td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        CRM software
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    Distracted by the readable
-                                                    content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <button class="btn btn-primary">Download Invoice</button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $110,00
-                                                </h4>
-                                            </td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        PM software
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    Readable content of a page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-
-                                                <div class="m-t-sm">
-                                                    <button class="btn btn-primary">Download Invoice</button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $130,00
-                                                </h4>
-                                            </td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-
-                                    <tbody>
-                                        <tr>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                <h3>
-                                                    <a href="#" class="text-navy">
-                                                        Photo editor
-                                                    </a>
-                                                </h3>
-                                                <p class="small">
-                                                    Page when looking at its layout. The point of using Lorem Ipsum is
-                                                </p>
-                                                <dl class="small m-b-none">
-                                                    <dt>Description lists</dt>
-                                                    <dd>A description list is perfect for defining terms.</dd>
-                                                </dl>
-                                                <div class="m-t-sm">
-                                                    <button class="btn btn-primary">Download Invoice</button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h4>
-                                                    $70,00
-                                                </h4>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-<style>
-    body {
-        margin-top: 20px;
-        background: #eee;
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error("No token found. User is not authenticated.");
+            return;
+        }
+        $.ajax({
+            url: `/api/ordershistory/${userId}`,
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json"
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                if (data.success) {
+                    populateOrderTable(data.data);
+                } else {
+                    console.error("Error fetching orders:", data);
+                    alert("Error fetching orders.");
+                }
+            },
+            error: function(error) {
+                console.error("Error fetching orders:", error);
+                alert("Error fetching orders.");
+            }
+        });
     }
 
-    h3 {
-        font-size: 16px;
-    }
+    function populateOrderTable(orders) {
+        const tableBody = document.getElementById("orderTableBody");
+        tableBody.innerHTML = ""; // Clear existing rows
 
-    .text-navy {
-        color: #1ab394;
-    }
+        orders.forEach(order => {
+            const row = document.createElement("tr");
 
-    .cart-product-imitation {
-        text-align: center;
-        padding-top: 30px;
-        height: 80px;
-        width: 80px;
-        background-color: #f8f8f9;
-    }
+            const invoiceIdCell = document.createElement("td");
+            invoiceIdCell.textContent = order.invoice.order_id;
+            row.appendChild(invoiceIdCell);
 
-    .product-imitation.xl {
-        padding: 120px 0;
-    }
+            const productsCell = document.createElement("td");
+            const productList = document.createElement("ul");
+            order.order_items.forEach(item => {
+                const productItem = document.createElement("li");
+                productItem.textContent = `${item.product.name}`;
+                productList.appendChild(productItem);
+            });
+            productsCell.appendChild(productList);
+            row.appendChild(productsCell);
 
-    .product-desc {
-        padding: 20px;
-        position: relative;
-    }
+            const quantityCell = document.createElement("td");
+            const quantityList = document.createElement("ul");
+            order.order_items.forEach(item => {
+                const quantityItem = document.createElement("li");
+                quantityItem.textContent = `${item.count}`;
+                quantityList.appendChild(quantityItem);
+            });
+            quantityCell.appendChild(quantityList);
+            row.appendChild(quantityCell);
 
-    .ecommerce .tag-list {
-        padding: 0;
-    }
+            const unitPriceCell = document.createElement("td");
+            const unitPriceList = document.createElement("ul");
+            order.order_items.forEach(item => {
+                const unitPriceItem = document.createElement("li");
+                unitPriceItem.textContent = `$${item.product.price}`;
+                unitPriceList.appendChild(unitPriceItem);
+            });
+            unitPriceCell.appendChild(unitPriceList);
+            row.appendChild(unitPriceCell);
 
-    .ecommerce .fa-star {
-        color: #d1dade;
-    }
+            const grandTotalCell = document.createElement("td");
+            grandTotalCell.textContent = `$${order.grand_total}`;
+            row.appendChild(grandTotalCell);
 
-    .ecommerce .fa-star.active {
-        color: #f8ac59;
-    }
+            const invoiceDateCell = document.createElement("td");
+            invoiceDateCell.textContent = new Date(order.invoice.created_at).toLocaleDateString();
+            row.appendChild(invoiceDateCell);
 
-    .ecommerce .note-editor {
-        border: 1px solid #e7eaec;
+            tableBody.appendChild(row);
+        });
     }
-
-    table.shoping-cart-table {
-        margin-bottom: 0;
-    }
-
-    table.shoping-cart-table tr td {
-        border: none;
-        text-align: right;
-    }
-
-    table.shoping-cart-table tr td.desc,
-    table.shoping-cart-table tr td:first-child {
-        text-align: left;
-    }
-
-    table.shoping-cart-table tr td:last-child {
-        width: 80px;
-    }
-
-    .ibox {
-        clear: both;
-        margin-bottom: 25px;
-        margin-top: 0;
-        padding: 0;
-    }
-
-    .ibox.collapsed .ibox-content {
-        display: none;
-    }
-
-    .ibox:after,
-    .ibox:before {
-        display: table;
-    }
-
-    .ibox-title {
-        -moz-border-bottom-colors: none;
-        -moz-border-left-colors: none;
-        -moz-border-right-colors: none;
-        -moz-border-top-colors: none;
-        background-color: #ffffff;
-        border-color: #e7eaec;
-        border-image: none;
-        border-style: solid solid none;
-        border-width: 3px 0 0;
-        color: inherit;
-        margin-bottom: 0;
-        padding: 14px 15px 7px;
-        min-height: 48px;
-    }
-
-    .ibox-content {
-        background-color: #ffffff;
-        color: inherit;
-        padding: 15px 20px 20px 20px;
-        border-color: #e7eaec;
-        border-image: none;
-        border-style: solid solid none;
-        border-width: 1px 0;
-    }
-
-    .ibox-footer {
-        color: inherit;
-        border-top: 1px solid #e7eaec;
-        font-size: 90%;
-        background: #ffffff;
-        padding: 10px 15px;
-    }
-</style>
+</script>
+@endsection

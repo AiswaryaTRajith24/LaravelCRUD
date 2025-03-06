@@ -45,3 +45,7 @@ Route::get('/add-product', function () {
 Route::get('/manage-products', function () {
     return view('manage_products');
 });
+
+Route::get('/get-orders-for-admin', function () {
+    return view('admin_order_history');
+});
